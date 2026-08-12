@@ -12,12 +12,53 @@ const state = { brand: 'all', selection: JSON.parse(localStorage.getItem('cangxu
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 
+const virtualPageRadius = () => window.innerWidth <= 760 ? 2 : 4;
+
+function virtualPageImage({ src, alt, width, height, eager = false }) {
+  return `<img${eager ? ` src="${src}"` : ''} data-src="${src}" alt="${alt}" class="${eager ? 'is-loading' : 'is-deferred'}" loading="${eager ? 'eager' : 'lazy'}"${eager ? ' fetchpriority="high"' : ''} decoding="async" width="${width}" height="${height}">`;
+}
+
+function updateVirtualPageWindow(container, currentPage, totalPages) {
+  if (!container) return;
+  const radius = virtualPageRadius();
+  const start = Math.max(1, currentPage - radius);
+  const end = Math.min(totalPages, currentPage + radius);
+  const nextPages = new Set();
+  for (let page = start; page <= end; page += 1) nextPages.add(page);
+
+  const loadedPages = container._virtualLoadedPages || new Set();
+  loadedPages.forEach((page) => {
+    if (nextPages.has(page)) return;
+    const image = container.querySelector(`figure[data-page="${page}"] img[data-src]`);
+    if (!image) return;
+    image.removeAttribute('src');
+    image.classList.remove('is-loading');
+    image.classList.add('is-deferred');
+  });
+
+  nextPages.forEach((page) => {
+    const image = container.querySelector(`figure[data-page="${page}"] img[data-src]`);
+    if (!image) return;
+    if (!image.hasAttribute('src')) {
+      image.classList.remove('is-deferred');
+      image.classList.add('is-loading');
+      image.src = image.dataset.src;
+    }
+    if (image.complete && image.naturalWidth > 0) image.classList.remove('is-loading');
+  });
+  container._virtualLoadedPages = nextPages;
+}
+
+document.addEventListener('load', (event) => {
+  if (event.target.matches?.('img[data-src]')) event.target.classList.remove('is-loading');
+}, true);
+
 const companyPages = $('#companyPages');
 if (companyPages) {
   companyPages.innerHTML = Array.from({ length: 35 }, (_, index) => {
     const page = index + 1;
     const file = String(page).padStart(2, '0');
-    return `<figure class="company-page" data-page="${page}"><img src="company-pages/page-${file}.webp" alt="苍玹公司介绍及施工工艺第 ${page} 页" loading="${page === 1 ? 'eager' : 'lazy'}"${page === 1 ? ' fetchpriority="high"' : ''} width="1920" height="1080"></figure>`;
+    return `<figure class="company-page virtual-page" data-page="${page}">${virtualPageImage({ src: `company-pages/page-${file}.webp`, alt: `苍玹公司介绍及施工工艺第 ${page} 页`, width: 1920, height: 1080, eager: page === 1 })}</figure>`;
   }).join('');
 
   const pageNodes = $$('.company-page');
@@ -29,6 +70,7 @@ if (companyPages) {
 
   const setActivePage = (page) => {
     currentPage = Math.max(1, Math.min(35, page));
+    updateVirtualPageWindow(companyPages, currentPage, 35);
     pageCounter.textContent = String(currentPage).padStart(2, '0');
     const chapter = chapterStarts.reduce((active, start, index) => currentPage >= start ? index : active, 0);
     chapterLinks.forEach((link, index) => link.classList.toggle('active', index === chapter));
@@ -108,6 +150,7 @@ let tilePageObserver = null;
 function setActiveTilePage(page) {
   if (!activeTileCatalog) return;
   activeTilePage = Math.max(1, Math.min(activeTileCatalog.pages, page));
+  updateVirtualPageWindow(tilePages, activeTilePage, activeTileCatalog.pages);
   $('#currentTilePage').textContent = String(activeTilePage).padStart(3, '0');
   const chapterIndex = activeTileCatalog.chapters.reduce((active, chapter, index) => activeTilePage >= chapter[1] ? index : active, 0);
   $$('.tile-chapter-link').forEach((link, index) => link.classList.toggle('active', index === chapterIndex));
@@ -133,7 +176,7 @@ function openTileCatalog(key) {
   tilePages.innerHTML = Array.from({ length: catalog.pages }, (_, index) => {
     const page = index + 1;
     const file = String(page).padStart(3, '0');
-    return `<figure class="tile-catalog-page" data-page="${page}"><img src="tile-pages/${catalog.folder}/page-${file}.webp" alt="${catalog.title}产品图册第 ${page} 页" loading="${page === 1 ? 'eager' : 'lazy'}"${page === 1 ? ' fetchpriority="high"' : ''} width="${catalog.width}" height="${catalog.height}"></figure>`;
+    return `<figure class="tile-catalog-page virtual-page" data-page="${page}">${virtualPageImage({ src: `tile-pages/${catalog.folder}/page-${file}.webp`, alt: `${catalog.title}产品图册第 ${page} 页`, width: catalog.width, height: catalog.height, eager: page === 1 })}</figure>`;
   }).join('');
   tileChapterNav.innerHTML = catalog.chapters.map(([name, page, endPage], index) => `<button class="tile-chapter-link${index === 0 ? ' active' : ''}" data-page="${page}"><i>${String(index + 1).padStart(2, '0')}</i><span><b>${name}</b><small>第 ${page}-${endPage} 页</small></span></button>`).join('');
   $$('.tile-chapter-link').forEach(link => link.addEventListener('click', () => goToTilePage(Number(link.dataset.page), 'auto')));
@@ -206,6 +249,7 @@ let bathroomPageObserver = null;
 function setActiveBathroomPage(page) {
   if (!activeBathroomCatalog) return;
   activeBathroomPage = Math.max(1, Math.min(activeBathroomCatalog.pages, page));
+  updateVirtualPageWindow(bathroomPages, activeBathroomPage, activeBathroomCatalog.pages);
   $('#currentBathroomPage').textContent = String(activeBathroomPage).padStart(3, '0');
   const chapterIndex = activeBathroomCatalog.chapters.reduce((active, chapter, index) => activeBathroomPage >= chapter[1] ? index : active, 0);
   $$('.bathroom-chapter-link').forEach((link, index) => link.classList.toggle('active', index === chapterIndex));
@@ -232,7 +276,7 @@ function openBathroomCatalog(key) {
   bathroomPages.innerHTML = Array.from({ length: catalog.pages }, (_, index) => {
     const page = index + 1;
     const file = String(page).padStart(3, '0');
-    return `<figure class="tile-catalog-page bathroom-catalog-page" data-page="${page}"><img src="bathroom-pages/${catalog.folder}/page-${file}.webp" alt="${catalog.title}第 ${page} 页" loading="${page === 1 ? 'eager' : 'lazy'}"${page === 1 ? ' fetchpriority="high"' : ''} width="${catalog.width}" height="${catalog.height}"></figure>`;
+    return `<figure class="tile-catalog-page bathroom-catalog-page virtual-page" data-page="${page}">${virtualPageImage({ src: `bathroom-pages/${catalog.folder}/page-${file}.webp`, alt: `${catalog.title}第 ${page} 页`, width: catalog.width, height: catalog.height, eager: page === 1 })}</figure>`;
   }).join('');
   bathroomChapterNav.innerHTML = catalog.chapters.map(([name, page, endPage], index) => `<button class="tile-chapter-link bathroom-chapter-link${index === 0 ? ' active' : ''}" data-page="${page}"><i>${String(index + 1).padStart(2, '0')}</i><span><b>${name}</b><small>第 ${page}-${endPage} 页</small></span></button>`).join('');
   $$('.bathroom-chapter-link').forEach(link => link.addEventListener('click', () => goToBathroomPage(Number(link.dataset.page), 'auto')));
@@ -320,6 +364,7 @@ let flooringPageObserver = null;
 function setActiveFlooringPage(page) {
   if (!activeFlooringCatalog) return;
   activeFlooringPage = Math.max(1, Math.min(activeFlooringCatalog.pages, page));
+  updateVirtualPageWindow(flooringPages, activeFlooringPage, activeFlooringCatalog.pages);
   $('#currentFlooringPage').textContent = String(activeFlooringPage).padStart(3, '0');
   const chapterIndex = activeFlooringCatalog.chapters.reduce((active, chapter, index) => activeFlooringPage >= chapter[1] ? index : active, 0);
   $$('.flooring-chapter-link').forEach((link, index) => link.classList.toggle('active', index === chapterIndex));
@@ -345,7 +390,7 @@ function openFlooringCatalog(key) {
   flooringPages.innerHTML = Array.from({ length: catalog.pages }, (_, index) => {
     const page = index + 1;
     const file = String(page).padStart(3, '0');
-    return `<figure class="tile-catalog-page flooring-catalog-page" data-page="${page}"><img src="flooring-pages/${catalog.folder}/page-${file}.webp" alt="${catalog.title}第 ${page} 页" loading="${page === 1 ? 'eager' : 'lazy'}"${page === 1 ? ' fetchpriority="high"' : ''} width="${catalog.width}" height="${catalog.height}"></figure>`;
+    return `<figure class="tile-catalog-page flooring-catalog-page virtual-page" data-page="${page}">${virtualPageImage({ src: `flooring-pages/${catalog.folder}/page-${file}.webp`, alt: `${catalog.title}第 ${page} 页`, width: catalog.width, height: catalog.height, eager: page === 1 })}</figure>`;
   }).join('');
   flooringChapterNav.innerHTML = catalog.chapters.map(([name, page, endPage], index) => `<button class="tile-chapter-link flooring-chapter-link${index === 0 ? ' active' : ''}" data-page="${page}"><i>${String(index + 1).padStart(2, '0')}</i><span><b>${name}</b><small>第 ${page}-${endPage} 页</small></span></button>`).join('');
   $$('.flooring-chapter-link').forEach(link => link.addEventListener('click', () => goToFlooringPage(Number(link.dataset.page), 'auto')));
