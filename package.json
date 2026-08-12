@@ -1,0 +1,9 @@
+{
+  "name": "cangxuan-selection-catalog",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check app.js && node --check server.mjs"
+  }
+}

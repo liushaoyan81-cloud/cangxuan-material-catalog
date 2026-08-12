@@ -1,0 +1,15 @@
+# Local server and conversion output
+*.log
+tmp-*/
+flooring-ocr.json
+three-layer-ocr-summary.json
+
+# Source PDFs are retained locally; the public site uses optimized WebP pages.
+public/catalogs/
+# Contains the three source price pages. The site uses kohler-mirror-public/.
+public/bathroom-pages/kohler-mirror/
+
+# Editor and system files
+.DS_Store
+Thumbs.db
+node_modules/

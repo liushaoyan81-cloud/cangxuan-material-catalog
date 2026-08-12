@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>苍玹设计全案软装 | 材料选型中心</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="docs.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" data-nav="home"><span class="brand-mark">C·X</span><span><b>苍玹</b><small>设计全案软装</small></span></a>
+      <nav class="nav" aria-label="主导航"><button data-nav="home">关于苍玹</button><button data-nav="tiles">瓷砖岩板</button><button data-nav="bathroom">卫浴系列</button><button data-nav="doors">木门系列</button><button data-nav="glass">玻璃隔断/门</button><button data-nav="flooring">木地板</button></nav>
+      <button class="selection-button" data-nav="selection"><span>选型单</span><strong id="selectionCount">0</strong></button>
+    </header>
+
+    <main>
+      <section id="home" class="view active">
+        <div class="company-reader">
+          <div id="companyPages" class="company-pages" aria-label="苍玹公司介绍及施工工艺"></div>
+          <aside class="company-index" aria-label="关于苍玹目录">
+            <div class="index-heading"><p class="eyebrow">ABOUT CANGXUAN</p><h1>关于苍玹</h1><span><b id="currentCompanyPage">01</b> / 35</span></div>
+            <nav>
+              <button class="chapter-link active" data-page="1"><i>01</i><span><b>企业简介</b><small>第 1-4 页</small></span></button>
+              <button class="chapter-link" data-page="5"><i>02</i><span><b>合作流程</b><small>第 5-9 页</small></span></button>
+              <button class="chapter-link" data-page="10"><i>03</i><span><b>装修辅材</b><small>第 10-24 页</small></span></button>
+              <button class="chapter-link" data-page="24"><i>04</i><span><b>实景案例</b><small>第 24-35 页</small></span></button>
+            </nav>
+            <p class="index-tip">滚动浏览</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="tiles" class="view">
+        <div id="tileCatalogHub">
+          <div class="page-head"><p class="eyebrow">MATERIAL SUPPLY CHAIN / TILE & SLAB</p><h1>瓷砖岩板</h1><p>先选择品牌进入完整图册，再通过右侧系列目录快速定位产品。</p></div>
+          <div class="tile-brand-entries">
+            <button class="tile-brand-entry dongpeng" data-open-tile-catalog="dongpeng"><span>01</span><div><p>DONGPENG</p><h2>东鹏瓷砖</h2><small>12 个系列 · 174 页</small></div><b>进入浏览 →</b></button>
+            <button class="tile-brand-entry guanzhu" data-open-tile-catalog="guanzhu"><span>02</span><div><p>GUANZHU</p><h2>冠珠瓷砖</h2><small>4 个产品大类 · 141 页</small></div><b>进入浏览 →</b></button>
+            <div class="tile-brand-entry pending"><span>03</span><div><p>NEW PEARL</p><h2>兴辉瓷砖</h2><small>产品资料待接入</small></div><b>等待资料</b></div>
+          </div>
+          <div class="tile-guide"><b>推荐浏览方式</b><span>普通业主按品牌与系列浏览；确定产品后记录名称、型号、规格和图册页码。</span></div>
+          <section class="tile-selection-area"><div class="supply-section-head"><p class="eyebrow">QUICK SELECTION</p><h2>产品选型入口</h2><p>以下为已整理的主推产品示例，完整产品请从上方品牌图册进入。</p></div><div class="brand-row"><button class="brand-filter active" data-brand="all">全部品牌</button><button class="brand-filter" data-brand="东鹏瓷砖">东鹏瓷砖</button><button class="brand-filter" data-brand="冠珠瓷砖">冠珠瓷砖</button><button class="brand-filter" data-brand="兴辉瓷砖">兴辉瓷砖</button></div><div id="productGrid" class="product-grid"></div></section>
+        </div>
+        <div id="tileCatalogReader" class="tile-catalog-reader hidden">
+          <div id="tileCatalogPages" class="tile-catalog-pages"></div>
+          <aside class="tile-catalog-index">
+            <button id="closeTileCatalog" class="catalog-back">← 返回品牌目录</button>
+            <div class="tile-index-heading"><p id="tileCatalogEyebrow" class="eyebrow"></p><h1 id="tileCatalogTitle"></h1><span><b id="currentTilePage">001</b> / <i id="totalTilePages"></i></span></div>
+            <nav id="tileChapterNav"></nav>
+            <p class="index-tip">滚轮一次浏览一页</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="bathroom" class="view">
+        <div id="bathroomCatalogHub">
+          <div class="page-head"><p class="eyebrow">MATERIAL SUPPLY CHAIN / BATHROOM</p><h1>卫浴系列</h1><p>按品牌进入完整产品资料，快速浏览洁具、龙头、淋浴、镜柜和浴室家具。</p></div>
+          <div class="bathroom-brand-entries">
+            <button class="bathroom-brand-entry kohler" data-open-bathroom-brand="kohler"><span>01</span><div><p>KOHLER</p><h2>科勒</h2><small>卫浴整本 · 龙头整本 · 镜柜推荐</small></div><b>查看产品资料 →</b></button>
+            <button class="bathroom-brand-entry moen" data-open-bathroom-brand="moen"><span>02</span><div><p>MOEN</p><h2>摩恩</h2><small>2025–26 工程产品整本</small></div><b>查看产品资料 →</b></button>
+          </div>
+          <div class="tile-guide"><b>科勒与摩恩资料已整理</b><span>按品牌和产品类型快速浏览，业主页面不展示报价。</span></div>
+        </div>
+        <div id="kohlerCatalogHub" class="hidden">
+          <div class="page-head bathroom-subhead"><button id="closeKohlerHub" class="catalog-back">← 返回卫浴品牌</button><p class="eyebrow">KOHLER PRODUCT LIBRARY</p><h1>科勒产品资料</h1><p>选择产品大类进入完整网页阅读。</p></div>
+          <div class="kohler-book-entries">
+            <button class="kohler-book-entry" data-open-bathroom-catalog="kohler-bathroom"><span>01</span><div><p>FULL LINE / BATHROOM</p><h2>卫浴产品整本</h2><small>177 页 · 坐便器 / 浴室家具 / 台盆 / 浴缸 / 淋浴门</small></div><b>进入浏览 →</b></button>
+            <button class="kohler-book-entry" data-open-bathroom-catalog="kohler-faucets"><span>02</span><div><p>FULL LINE / FAUCETS</p><h2>龙头与淋浴整本</h2><small>110 页 · 浴室龙头 / 淋浴 / 配件 / 厨房龙头 / 厨盆</small></div><b>进入浏览 →</b></button>
+            <button class="kohler-book-entry" data-open-bathroom-catalog="kohler-mirror"><span>03</span><div><p>RECOMMENDATION / MIRROR CABINET</p><h2>镜柜产品推荐</h2><small>12 页公开内容 · 已排除价格页面</small></div><b>进入浏览 →</b></button>
+          </div>
+        </div>
+        <div id="moenCatalogHub" class="hidden">
+          <div class="page-head bathroom-subhead"><button id="closeMoenHub" class="catalog-back">← 返回卫浴品牌</button><p class="eyebrow">MOEN PRODUCT LIBRARY</p><h1>摩恩产品资料</h1><p>工程册以完整跨页画幅呈现，可按产品大类快速浏览。</p></div>
+          <div class="bathroom-book-entries single-book">
+            <button class="bathroom-book-entry moen-book" data-open-bathroom-catalog="moen-engineering"><span>01</span><div><p>ENGINEERING COLLECTION / 2025–26</p><h2>摩恩工程产品整本</h2><small>187 个网页跨页 · 陶瓷洁具 / 卫浴龙头 / 淋浴 / 浴室家具 / 厨房产品</small></div><b>进入浏览 →</b></button>
+          </div>
+          <div class="tile-guide moen-guide"><b>完整资料已接入</b><span>原文件 373 页已整理成 187 个电脑横向跨页，保留产品型号与技术参数。</span></div>
+        </div>
+        <div id="bathroomCatalogReader" class="tile-catalog-reader hidden">
+          <div id="bathroomCatalogPages" class="tile-catalog-pages"></div>
+          <aside class="tile-catalog-index">
+            <button id="closeBathroomCatalog" class="catalog-back">← 返回品牌资料</button>
+            <div class="tile-index-heading"><p id="bathroomCatalogEyebrow" class="eyebrow"></p><h1 id="bathroomCatalogTitle"></h1><span><b id="currentBathroomPage">001</b> / <i id="totalBathroomPages"></i></span></div>
+            <nav id="bathroomChapterNav"></nav>
+            <p class="index-tip">滚轮一次浏览一页</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="doors" class="view supply-view"><div class="page-head"><p class="eyebrow">MATERIAL SUPPLY CHAIN / WOOD DOOR</p><h1>木门系列</h1><p>用于整理室内门、门套及配套五金，记录门型、饰面、颜色和尺寸。</p></div><div class="supply-subcategories"><span>室内门</span><span>隐形门</span><span>门套垭口</span><span>踢脚线</span><span>门锁五金</span></div><div class="supply-await"><b>产品资料待接入</b><p>收到品牌图册后，将按完整网页浏览、型号选取和选型记录三个层级接入。</p></div></section>
+
+      <section id="glass" class="view supply-view"><div class="page-head"><p class="eyebrow">MATERIAL SUPPLY CHAIN / GLASS</p><h1>玻璃隔断/门</h1><p>用于整理玻璃隔断、推拉门和系统门，记录型材、玻璃、颜色和开启方式。</p></div><div class="supply-subcategories"><span>玻璃隔断</span><span>推拉门</span><span>平开门</span><span>系统门</span><span>型材五金</span></div><div class="supply-await"><b>产品资料待接入</b><p>收到品牌图册后，将按完整网页浏览、型号选取和选型记录三个层级接入。</p></div></section>
+
+      <section id="flooring" class="view">
+        <div id="flooringCatalogHub">
+          <div class="page-head"><p class="eyebrow">MATERIAL SUPPLY CHAIN / FLOORING</p><h1>木地板</h1><p>按品牌和地板结构进入完整产品资料，快速浏览花色、型号、规格与铺装效果。</p></div>
+          <div class="flooring-brand-entries">
+            <button class="flooring-brand-entry saint" data-open-flooring-brand="saint"><span>01</span><div><p>POWER DEKOR</p><h2>圣象地板</h2><small>强化地板 · 三层实木复合 · 多层实木复合</small></div><b>查看产品资料 →</b></button>
+          </div>
+          <div class="tile-guide"><b>圣象资料已整理</b><span>三套产品图册分别浏览，保留型号与工艺信息，业主页面不展示报价。</span></div>
+        </div>
+        <div id="saintCatalogHub" class="hidden">
+          <div class="page-head bathroom-subhead"><button id="closeSaintHub" class="catalog-back">← 返回木地板品牌</button><p class="eyebrow">POWER DEKOR PRODUCT LIBRARY</p><h1>圣象产品资料</h1><p>按地板结构选择图册，进入完整网页阅读。</p></div>
+          <div class="flooring-book-entries">
+            <button class="flooring-book-entry" data-open-flooring-catalog="saint-laminate"><span>01</span><div><p>LAMINATE FLOORING / 2026</p><h2>强化地板花色</h2><small>40 页 · 宠爱家 / 1515 / 真木纹 / 浮视绘 / 轻享</small></div><b>进入浏览 →</b></button>
+            <button class="flooring-book-entry featured" data-open-flooring-catalog="saint-three-layer"><span>02</span><div><p>THREE-LAYER WOOD / 2026</p><h2>三层实木复合</h2><small>292 页 · 康逸系列完整产品与空间效果</small></div><b>进入浏览 →</b></button>
+            <button class="flooring-book-entry" data-open-flooring-catalog="saint-multilayer"><span>03</span><div><p>MULTI-LAYER WOOD / 2026</p><h2>多层实木复合</h2><small>52 页 · 艾斯本多层产品、花色与配套系统</small></div><b>进入浏览 →</b></button>
+          </div>
+        </div>
+        <div id="flooringCatalogReader" class="tile-catalog-reader hidden">
+          <div id="flooringCatalogPages" class="tile-catalog-pages"></div>
+          <aside class="tile-catalog-index">
+            <button id="closeFlooringCatalog" class="catalog-back">← 返回圣象资料</button>
+            <div class="tile-index-heading"><p id="flooringCatalogEyebrow" class="eyebrow"></p><h1 id="flooringCatalogTitle"></h1><span><b id="currentFlooringPage">001</b> / <i id="totalFlooringPages"></i></span></div>
+            <nav id="flooringChapterNav"></nav>
+            <p class="index-tip">滚轮一次浏览一页</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="selection" class="view"><div class="page-head"><p class="eyebrow">MY SELECTION</p><h1>我的选型单</h1><p>记录喜欢的型号、款式和备注，提交给设计师作为后续沟通依据。</p></div><div id="selectionEmpty" class="empty-state"><div class="empty-icon">＋</div><h2>还没有选中的产品</h2><p>去供应链目录挑选产品，点击“加入选型单”即可保存。</p><button class="primary" data-nav="tiles">去选产品 <span>→</span></button></div><div id="selectionContent" class="selection-content hidden"><div id="selectionList"></div><form id="selectionForm" class="selection-form"><h2>提交选型记录</h2><label>称呼<input name="name" required placeholder="怎么称呼您" /></label><label>联系电话<input name="phone" required placeholder="方便设计师联系您" /></label><label>项目情况<textarea name="note" rows="3" placeholder="户型、面积、装修阶段或其他备注"></textarea></label><button class="primary" type="submit">提交给苍玹 <span>→</span></button><p class="form-tip">提交后只生成选型记录，不产生报价。</p></form></div></section>
+    </main>
+
+    <div id="toast" class="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
