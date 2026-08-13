@@ -328,7 +328,8 @@ window.addEventListener('wheel', (event) => {
 
 const flooringCatalogs = {
   'saint-laminate': {
-    title: '圣象强化地板', eyebrow: 'POWER DEKOR / LAMINATE FLOORING 2026', pages: 40, folder: 'saint-laminate-2026', width: 1692, height: 1057,
+    title: '圣象强化地板', eyebrow: 'POWER DEKOR / LAMINATE FLOORING 2026', pages: 40, folder: 'saint-laminate-2026', width: 1272, height: 1800,
+    landscapePages: [3],
     chapters: [
       ['目录与绿色产业链', 1, 5], ['地板拼法与工艺', 6, 7], ['宠爱家系列', 8, 15], ['1515系列', 16, 19],
       ['真木纹系列', 20, 21], ['浮视绘系列', 22, 25], ['田园系列', 26, 27], ['轻享系列', 28, 29],
@@ -336,7 +337,8 @@ const flooringCatalogs = {
     ]
   },
   'saint-three-layer': {
-    title: '圣象三层实木复合', eyebrow: 'POWER DEKOR / THREE-LAYER WOOD 2026', pages: 292, folder: 'saint-three-layer-2026', width: 1692, height: 1057,
+    title: '圣象三层实木复合', eyebrow: 'POWER DEKOR / THREE-LAYER WOOD 2026', pages: 292, folder: 'saint-three-layer-2026', width: 1800, height: 1272,
+    portraitPages: [4, 5, 12, 52, 55, 58, 78, 90, 117, 121, 157, 214, 228, 239, 249, 257, 269],
     chapters: [
       ['品牌与结构工艺', 1, 20], ['顶层设计系列', 21, 40], ['Miracle Time 奇迹时光', 41, 68], ['国风实木系列', 69, 94],
       ['Maillard 美拉德', 95, 132], ['原木生活系列', 133, 144], ['Oakome 橡木系列', 145, 160], ['唐之韵系列', 161, 186],
@@ -345,13 +347,16 @@ const flooringCatalogs = {
     ]
   },
   'saint-multilayer': {
-    title: '圣象多层实木复合', eyebrow: 'POWER DEKOR ASPIN / MULTI-LAYER WOOD 2026', pages: 52, folder: 'saint-multilayer-2026', width: 1692, height: 1057,
+    title: '圣象多层实木复合', eyebrow: 'POWER DEKOR ASPIN / MULTI-LAYER WOOD 2026', pages: 52, folder: 'saint-multilayer-2026', width: 1272, height: 1800,
+    landscapePages: [9, 30],
     chapters: [
       ['艾斯本品牌与产品优势', 1, 7], ['胡桃木系列', 8, 11], ['柚木系列', 12, 17], ['栎木与橡木系列', 18, 27],
       ['榆木系列', 28, 35], ['多层花色产品', 36, 49], ['圣象元配', 50, 52]
     ]
   }
 };
+
+const flooringAssetVersion = '20260813-original-orientation';
 
 const flooringReader = $('#flooringCatalogReader');
 const flooringPages = $('#flooringCatalogPages');
@@ -360,6 +365,12 @@ let activeFlooringCatalog = null;
 let activeFlooringPage = 1;
 let flooringWheelLocked = false;
 let flooringPageObserver = null;
+
+function flooringPageDimensions(catalog, page) {
+  const isPortrait = catalog.portraitPages?.includes(page)
+    || (catalog.landscapePages && !catalog.landscapePages.includes(page));
+  return isPortrait ? { width: 1272, height: 1800 } : { width: 1800, height: 1272 };
+}
 
 function setActiveFlooringPage(page) {
   if (!activeFlooringCatalog) return;
@@ -390,7 +401,8 @@ function openFlooringCatalog(key) {
   flooringPages.innerHTML = Array.from({ length: catalog.pages }, (_, index) => {
     const page = index + 1;
     const file = String(page).padStart(3, '0');
-    return `<figure class="tile-catalog-page flooring-catalog-page virtual-page" data-page="${page}">${virtualPageImage({ src: `flooring-pages/${catalog.folder}/page-${file}.webp`, alt: `${catalog.title}第 ${page} 页`, width: catalog.width, height: catalog.height, eager: page === 1 })}</figure>`;
+    const dimensions = flooringPageDimensions(catalog, page);
+    return `<figure class="tile-catalog-page flooring-catalog-page virtual-page" data-page="${page}">${virtualPageImage({ src: `flooring-pages/${catalog.folder}/page-${file}.webp?v=${flooringAssetVersion}`, alt: `${catalog.title}第 ${page} 页`, width: dimensions.width, height: dimensions.height, eager: page === 1 })}</figure>`;
   }).join('');
   flooringChapterNav.innerHTML = catalog.chapters.map(([name, page, endPage], index) => `<button class="tile-chapter-link flooring-chapter-link${index === 0 ? ' active' : ''}" data-page="${page}"><i>${String(index + 1).padStart(2, '0')}</i><span><b>${name}</b><small>第 ${page}-${endPage} 页</small></span></button>`).join('');
   $$('.flooring-chapter-link').forEach(link => link.addEventListener('click', () => goToFlooringPage(Number(link.dataset.page), 'auto')));
