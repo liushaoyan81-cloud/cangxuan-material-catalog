@@ -13,9 +13,50 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 
 const virtualPageRadius = () => window.innerWidth <= 760 ? 2 : 4;
+const catalogAssetVersion = '20260813-image-recovery-v2';
+
+function versionedAsset(src) {
+  const separator = src.includes('?') ? '&' : '?';
+  return `${src}${separator}site=${catalogAssetVersion}`;
+}
 
 function virtualPageImage({ src, alt, width, height, eager = false }) {
-  return `<img${eager ? ` src="${src}"` : ''} data-src="${src}" alt="${alt}" class="${eager ? 'is-loading' : 'is-deferred'}" loading="${eager ? 'eager' : 'lazy'}"${eager ? ' fetchpriority="high"' : ''} decoding="async" width="${width}" height="${height}">`;
+  const assetSrc = versionedAsset(src);
+  return `<img${eager ? ` src="${assetSrc}"` : ''} data-src="${assetSrc}" alt="${alt}" class="${eager ? 'is-loading' : 'is-deferred'}" loading="${eager ? 'eager' : 'lazy'}"${eager ? ' fetchpriority="high"' : ''} decoding="async" width="${width}" height="${height}">`;
+}
+
+function reloadVirtualImage(image) {
+  if (!image?.dataset.src) return;
+  const retryUrl = new URL(image.dataset.src, document.baseURI);
+  retryUrl.searchParams.set('retry', Date.now());
+  image.parentElement?.classList.remove('image-load-error');
+  image.classList.remove('is-deferred');
+  image.classList.add('is-loading');
+  image.src = retryUrl.href;
+  watchVirtualImage(image);
+}
+
+function watchVirtualImage(image) {
+  if (!image?.hasAttribute('src')) return;
+  const loadToken = `${Date.now()}-${Math.random()}`;
+  image.dataset.loadToken = loadToken;
+  window.setTimeout(() => {
+    if (image.dataset.loadToken !== loadToken || !image.hasAttribute('src')) return;
+    if (image.complete && image.naturalWidth > 0) return;
+    handleVirtualImageFailure(image);
+  }, 12000);
+}
+
+function handleVirtualImageFailure(image) {
+  const retryCount = Number(image.dataset.retryCount || 0);
+  if (retryCount < 2) {
+    image.dataset.retryCount = String(retryCount + 1);
+    window.setTimeout(() => reloadVirtualImage(image), 700 * (retryCount + 1));
+    return;
+  }
+  image.classList.remove('is-loading');
+  image.classList.add('is-deferred');
+  image.parentElement?.classList.add('image-load-error');
 }
 
 function updateVirtualPageWindow(container, currentPage, totalPages) {
@@ -44,14 +85,34 @@ function updateVirtualPageWindow(container, currentPage, totalPages) {
       image.classList.add('is-loading');
       image.src = image.dataset.src;
     }
+    watchVirtualImage(image);
     if (image.complete && image.naturalWidth > 0) image.classList.remove('is-loading');
   });
   container._virtualLoadedPages = nextPages;
 }
 
 document.addEventListener('load', (event) => {
-  if (event.target.matches?.('img[data-src]')) event.target.classList.remove('is-loading');
+  if (!event.target.matches?.('img[data-src]')) return;
+  event.target.classList.remove('is-loading');
+  event.target.dataset.loadToken = '';
+  event.target.dataset.retryCount = '0';
+  event.target.parentElement?.classList.remove('image-load-error');
 }, true);
+
+document.addEventListener('error', (event) => {
+  const image = event.target;
+  if (!image.matches?.('img[data-src]')) return;
+  handleVirtualImageFailure(image);
+}, true);
+
+document.addEventListener('click', (event) => {
+  const page = event.target.closest?.('.image-load-error');
+  if (!page) return;
+  const image = page.querySelector('img[data-src]');
+  if (!image) return;
+  image.dataset.retryCount = '0';
+  reloadVirtualImage(image);
+});
 
 const companyPages = $('#companyPages');
 if (companyPages) {
@@ -60,6 +121,7 @@ if (companyPages) {
     const file = String(page).padStart(2, '0');
     return `<figure class="company-page virtual-page" data-page="${page}">${virtualPageImage({ src: `company-pages/page-${file}.webp`, alt: `苍玹公司介绍及施工工艺第 ${page} 页`, width: 1920, height: 1080, eager: page === 1 })}</figure>`;
   }).join('');
+  companyPages.querySelectorAll('img[src]').forEach(watchVirtualImage);
 
   const pageNodes = $$('.company-page');
   const chapterLinks = $$('.chapter-link');
@@ -183,6 +245,7 @@ function openTileCatalog(key) {
     const file = String(page).padStart(3, '0');
     return `<figure class="tile-catalog-page virtual-page" data-page="${page}">${virtualPageImage({ src: `tile-pages/${catalog.folder}/page-${file}.webp`, alt: `${catalog.title}产品图册第 ${page} 页`, width: catalog.width, height: catalog.height, eager: page === 1 })}</figure>`;
   }).join('');
+  tilePages.querySelectorAll('img[src]').forEach(watchVirtualImage);
   tileChapterNav.innerHTML = catalog.chapters.map(([name, page, endPage], index) => `<button class="tile-chapter-link${index === 0 ? ' active' : ''}" data-page="${page}"><i>${String(index + 1).padStart(2, '0')}</i><span><b>${name}</b><small>第 ${page}-${endPage} 页</small></span></button>`).join('');
   $$('.tile-chapter-link').forEach(link => link.addEventListener('click', () => goToTilePage(Number(link.dataset.page), 'auto')));
   tilePageObserver?.disconnect();
@@ -283,6 +346,7 @@ function openBathroomCatalog(key) {
     const file = String(page).padStart(3, '0');
     return `<figure class="tile-catalog-page bathroom-catalog-page virtual-page" data-page="${page}">${virtualPageImage({ src: `bathroom-pages/${catalog.folder}/page-${file}.webp`, alt: `${catalog.title}第 ${page} 页`, width: catalog.width, height: catalog.height, eager: page === 1 })}</figure>`;
   }).join('');
+  bathroomPages.querySelectorAll('img[src]').forEach(watchVirtualImage);
   bathroomChapterNav.innerHTML = catalog.chapters.map(([name, page, endPage], index) => `<button class="tile-chapter-link bathroom-chapter-link${index === 0 ? ' active' : ''}" data-page="${page}"><i>${String(index + 1).padStart(2, '0')}</i><span><b>${name}</b><small>第 ${page}-${endPage} 页</small></span></button>`).join('');
   $$('.bathroom-chapter-link').forEach(link => link.addEventListener('click', () => goToBathroomPage(Number(link.dataset.page), 'auto')));
   bathroomPageObserver?.disconnect();
@@ -409,6 +473,7 @@ function openFlooringCatalog(key) {
     const dimensions = flooringPageDimensions(catalog, page);
     return `<figure class="tile-catalog-page flooring-catalog-page virtual-page" data-page="${page}">${virtualPageImage({ src: `flooring-pages/${catalog.folder}/page-${file}.webp?v=${flooringAssetVersion}`, alt: `${catalog.title}第 ${page} 页`, width: dimensions.width, height: dimensions.height, eager: page === 1 })}</figure>`;
   }).join('');
+  flooringPages.querySelectorAll('img[src]').forEach(watchVirtualImage);
   flooringChapterNav.innerHTML = catalog.chapters.map(([name, page, endPage], index) => `<button class="tile-chapter-link flooring-chapter-link${index === 0 ? ' active' : ''}" data-page="${page}"><i>${String(index + 1).padStart(2, '0')}</i><span><b>${name}</b><small>第 ${page}-${endPage} 页</small></span></button>`).join('');
   $$('.flooring-chapter-link').forEach(link => link.addEventListener('click', () => goToFlooringPage(Number(link.dataset.page), 'auto')));
   flooringPageObserver?.disconnect();
@@ -510,6 +575,7 @@ function openLightingCatalog(key) {
     const file = String(page).padStart(3, '0');
     return `<figure class="tile-catalog-page lighting-catalog-page virtual-page" data-page="${page}">${virtualPageImage({ src: `lighting-pages/${catalog.folder}/page-${file}.webp?v=${lightingAssetVersion}`, alt: `${catalog.title}第 ${page} 页`, width: 1800, height: 1273, eager: page === 1 })}</figure>`;
   }).join('');
+  lightingPages.querySelectorAll('img[src]').forEach(watchVirtualImage);
   const chapters = lightingChapters(catalog);
   $('#lightingChapterNav').innerHTML = chapters.map(([name, page], index) => `<button class="tile-chapter-link lighting-chapter-link${index === 0 ? ' active' : ''}" data-page="${page}"><i>${String(index + 1).padStart(2, '0')}</i><span><b>${name}</b><small>快速跳转</small></span></button>`).join('');
   $$('.lighting-chapter-link').forEach(link => link.addEventListener('click', () => goToLightingPage(Number(link.dataset.page), 'auto')));
