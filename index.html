@@ -11,7 +11,7 @@
   <body>
     <header class="topbar">
       <a class="brand" href="#home" data-nav="home"><span class="brand-mark">C·X</span><span><b>苍玹</b><small>设计全案软装</small></span></a>
-      <nav class="nav" aria-label="主导航"><button data-nav="home">关于苍玹</button><button data-nav="tiles">瓷砖岩板</button><button data-nav="bathroom">卫浴系列</button><button data-nav="doors">木门系列</button><button data-nav="glass">玻璃隔断/门</button><button data-nav="flooring">木地板</button></nav>
+      <nav class="nav" aria-label="主导航"><button data-nav="home">关于苍玹</button><button data-nav="tiles">瓷砖岩板</button><button data-nav="bathroom">卫浴系列</button><button data-nav="doors">木门系列</button><button data-nav="glass">玻璃隔断/门</button><button data-nav="flooring">木地板</button><button data-nav="lighting">灯光系列</button></nav>
       <button class="selection-button" data-nav="selection"><span>选型单</span><strong id="selectionCount">0</strong></button>
     </header>
 
@@ -115,6 +115,32 @@
             <button id="closeFlooringCatalog" class="catalog-back">← 返回圣象资料</button>
             <div class="tile-index-heading"><p id="flooringCatalogEyebrow" class="eyebrow"></p><h1 id="flooringCatalogTitle"></h1><span><b id="currentFlooringPage">001</b> / <i id="totalFlooringPages"></i></span></div>
             <nav id="flooringChapterNav"></nav>
+            <p class="index-tip">滚轮一次浏览一页</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="lighting" class="view">
+        <div id="lightingCatalogHub">
+          <div class="page-head"><p class="eyebrow">MATERIAL SUPPLY CHAIN / LIGHTING</p><h1>灯光系列</h1><p>保留原Excel的产品图片、型号、规格和合并单元格排版，按灯具类型进入完整资料。</p></div>
+          <div class="lighting-book-entries">
+            <button class="lighting-book-entry featured" data-open-lighting-catalog="dining-pendant"><span>01</span><div><p>DINING PENDANT</p><h2>餐吊灯</h2><small>11 页 · 型号 / 尺寸 / 材质 / 光源 / 颜色</small></div><b>进入浏览 →</b></button>
+            <button class="lighting-book-entry" data-open-lighting-catalog="resin-light"><span>02</span><div><p>RESIN LIGHT</p><h2>树脂灯</h2><small>5 页 · 树脂吸顶灯与系列规格</small></div><b>进入浏览 →</b></button>
+            <button class="lighting-book-entry" data-open-lighting-catalog="small-pendant"><span>03</span><div><p>SMALL PENDANT</p><h2>小吊灯</h2><small>91 页 · 多款式、多颜色与多规格</small></div><b>进入浏览 →</b></button>
+            <button class="lighting-book-entry featured" data-open-lighting-catalog="large-chandelier"><span>04</span><div><p>LARGE CHANDELIER</p><h2>大吊灯</h2><small>64 页 · 客厅、餐厅及复式空间灯具</small></div><b>进入浏览 →</b></button>
+            <button class="lighting-book-entry" data-open-lighting-catalog="alabaster-small-pendant"><span>05</span><div><p>ALABASTER PENDANT</p><h2>云石小吊灯</h2><small>8 页 · 云石材质小型吊灯</small></div><b>进入浏览 →</b></button>
+            <button class="lighting-book-entry" data-open-lighting-catalog="alabaster-chandelier"><span>06</span><div><p>ALABASTER CHANDELIER</p><h2>云石大吊灯</h2><small>5 页 · 大型云石吊灯系列</small></div><b>进入浏览 →</b></button>
+            <button class="lighting-book-entry" data-open-lighting-catalog="alabaster-table-floor"><span>07</span><div><p>TABLE & FLOOR LIGHT</p><h2>云石台灯 / 落地灯</h2><small>5 页 · 台灯与落地灯</small></div><b>进入浏览 →</b></button>
+            <button class="lighting-book-entry" data-open-lighting-catalog="alabaster-ceiling"><span>08</span><div><p>CEILING LIGHT</p><h2>云石吸顶灯</h2><small>2 页 · 云石吸顶灯款式</small></div><b>进入浏览 →</b></button>
+          </div>
+          <div class="tile-guide lighting-guide"><b>原表格版式已保留</b><span>产品图与型号按Excel原位置呈现，不重新拆列，不展示报价。</span></div>
+        </div>
+        <div id="lightingCatalogReader" class="tile-catalog-reader hidden">
+          <div id="lightingCatalogPages" class="tile-catalog-pages"></div>
+          <aside class="tile-catalog-index">
+            <button id="closeLightingCatalog" class="catalog-back">← 返回灯光目录</button>
+            <div class="tile-index-heading"><p id="lightingCatalogEyebrow" class="eyebrow"></p><h1 id="lightingCatalogTitle"></h1><span><b id="currentLightingPage">001</b> / <i id="totalLightingPages"></i></span></div>
+            <nav id="lightingChapterNav"></nav>
             <p class="index-tip">滚轮一次浏览一页</p>
           </aside>
         </div>

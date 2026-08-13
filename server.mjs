@@ -11,7 +11,7 @@ const types = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=
 const server = http.createServer(async (req, res) => {
   const requested = decodeURIComponent((req.url || "/").split("?")[0]);
   const relative = requested === "/" ? "index.html" : requested.replace(/^\/+/, "");
-  const publicAsset = relative.startsWith("catalogs\\") || relative.startsWith("catalogs/") || relative.startsWith("company-pages\\") || relative.startsWith("company-pages/") || relative.startsWith("tile-pages\\") || relative.startsWith("tile-pages/") || relative.startsWith("bathroom-pages\\") || relative.startsWith("bathroom-pages/") || relative.startsWith("flooring-pages\\") || relative.startsWith("flooring-pages/");
+  const publicAsset = relative.startsWith("catalogs\\") || relative.startsWith("catalogs/") || relative.startsWith("company-pages\\") || relative.startsWith("company-pages/") || relative.startsWith("tile-pages\\") || relative.startsWith("tile-pages/") || relative.startsWith("bathroom-pages\\") || relative.startsWith("bathroom-pages/") || relative.startsWith("flooring-pages\\") || relative.startsWith("flooring-pages/") || relative.startsWith("lighting-pages\\") || relative.startsWith("lighting-pages/");
   const fileRoot = publicAsset ? join(root, "public") : root;
   const file = normalize(join(fileRoot, relative));
   if (!file.startsWith(normalize(root))) {

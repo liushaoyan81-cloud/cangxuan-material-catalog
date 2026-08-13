@@ -121,6 +121,11 @@ function showView(id){
     $('#saintCatalogHub')?.classList.add('hidden');
     $('#flooringCatalogReader')?.classList.add('hidden');
   }
+  if (id === 'lighting') {
+    activeLightingCatalog = null;
+    $('#lightingCatalogHub')?.classList.remove('hidden');
+    $('#lightingCatalogReader')?.classList.add('hidden');
+  }
   window.scrollTo({top:0, behavior:'smooth'});
 }
 $$('[data-nav]').forEach(btn => btn.addEventListener('click', () => showView(btn.dataset.nav)));
@@ -442,6 +447,98 @@ window.addEventListener('wheel', (event) => {
   flooringWheelLocked = true;
   goToFlooringPage(activeFlooringPage + (event.deltaY > 0 ? 1 : -1));
   window.setTimeout(() => { flooringWheelLocked = false; }, 650);
+}, { passive: false });
+
+const lightingCatalogs = {
+  'dining-pendant': { title: '餐吊灯', eyebrow: 'DINING PENDANT LIGHTING', pages: 11, folder: 'dining-pendant' },
+  'resin-light': { title: '树脂灯', eyebrow: 'RESIN LIGHTING', pages: 5, folder: 'resin-light' },
+  'small-pendant': { title: '小吊灯', eyebrow: 'SMALL PENDANT LIGHTING', pages: 91, folder: 'small-pendant' },
+  'large-chandelier': { title: '大吊灯', eyebrow: 'LARGE CHANDELIER', pages: 64, folder: 'large-chandelier' },
+  'alabaster-small-pendant': { title: '云石小吊灯', eyebrow: 'ALABASTER SMALL PENDANT', pages: 8, folder: 'alabaster-small-pendant' },
+  'alabaster-chandelier': { title: '云石大吊灯', eyebrow: 'ALABASTER CHANDELIER', pages: 5, folder: 'alabaster-chandelier' },
+  'alabaster-table-floor': { title: '云石台灯 / 落地灯', eyebrow: 'ALABASTER TABLE & FLOOR', pages: 5, folder: 'alabaster-table-floor' },
+  'alabaster-ceiling': { title: '云石吸顶灯', eyebrow: 'ALABASTER CEILING LIGHT', pages: 2, folder: 'alabaster-ceiling' }
+};
+
+const lightingAssetVersion = '20260813-lighting-v1';
+const lightingReader = $('#lightingCatalogReader');
+const lightingPages = $('#lightingCatalogPages');
+let activeLightingCatalog = null;
+let activeLightingPage = 1;
+let lightingWheelLocked = false;
+let lightingPageObserver = null;
+
+function lightingChapters(catalog) {
+  const size = catalog.pages <= 12 ? Math.max(1, Math.ceil(catalog.pages / 3)) : 10;
+  const chapters = [];
+  for (let page = 1; page <= catalog.pages; page += size) {
+    const endPage = Math.min(page + size - 1, catalog.pages);
+    chapters.push([page === endPage ? `第 ${page} 页` : `第 ${page}-${endPage} 页`, page]);
+  }
+  return chapters;
+}
+
+function setActiveLightingPage(page) {
+  if (!activeLightingCatalog) return;
+  activeLightingPage = Math.max(1, Math.min(activeLightingCatalog.pages, page));
+  updateVirtualPageWindow(lightingPages, activeLightingPage, activeLightingCatalog.pages);
+  $('#currentLightingPage').textContent = String(activeLightingPage).padStart(3, '0');
+  const chapters = lightingChapters(activeLightingCatalog);
+  const chapterIndex = chapters.reduce((active, chapter, index) => activeLightingPage >= chapter[1] ? index : active, 0);
+  $$('.lighting-chapter-link').forEach((link, index) => link.classList.toggle('active', index === chapterIndex));
+}
+
+function goToLightingPage(page, behavior = 'smooth') {
+  const target = $(`.lighting-catalog-page[data-page="${page}"]`);
+  if (!target) return;
+  setActiveLightingPage(page);
+  target.scrollIntoView({ behavior: behavior === 'auto' ? 'instant' : behavior, block: 'start' });
+}
+
+function openLightingCatalog(key) {
+  const catalog = lightingCatalogs[key];
+  if (!catalog) return;
+  activeLightingCatalog = catalog;
+  activeLightingPage = 1;
+  $('#lightingCatalogHub').classList.add('hidden');
+  lightingReader.classList.remove('hidden');
+  $('#lightingCatalogEyebrow').textContent = catalog.eyebrow;
+  $('#lightingCatalogTitle').textContent = catalog.title;
+  $('#totalLightingPages').textContent = catalog.pages;
+  lightingPages.innerHTML = Array.from({ length: catalog.pages }, (_, index) => {
+    const page = index + 1;
+    const file = String(page).padStart(3, '0');
+    return `<figure class="tile-catalog-page lighting-catalog-page virtual-page" data-page="${page}">${virtualPageImage({ src: `lighting-pages/${catalog.folder}/page-${file}.webp?v=${lightingAssetVersion}`, alt: `${catalog.title}第 ${page} 页`, width: 1800, height: 1273, eager: page === 1 })}</figure>`;
+  }).join('');
+  const chapters = lightingChapters(catalog);
+  $('#lightingChapterNav').innerHTML = chapters.map(([name, page], index) => `<button class="tile-chapter-link lighting-chapter-link${index === 0 ? ' active' : ''}" data-page="${page}"><i>${String(index + 1).padStart(2, '0')}</i><span><b>${name}</b><small>快速跳转</small></span></button>`).join('');
+  $$('.lighting-chapter-link').forEach(link => link.addEventListener('click', () => goToLightingPage(Number(link.dataset.page), 'auto')));
+  updateVirtualPageWindow(lightingPages, 1, catalog.pages);
+  lightingPageObserver?.disconnect();
+  lightingPageObserver = new IntersectionObserver((entries) => {
+    const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visible) setActiveLightingPage(Number(visible.target.dataset.page));
+  }, { threshold: [0.45, 0.6, 0.75] });
+  $$('.lighting-catalog-page').forEach(page => lightingPageObserver.observe(page));
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+$$('[data-open-lighting-catalog]').forEach(button => button.addEventListener('click', () => openLightingCatalog(button.dataset.openLightingCatalog)));
+$('#closeLightingCatalog')?.addEventListener('click', () => {
+  lightingPageObserver?.disconnect();
+  activeLightingCatalog = null;
+  lightingReader.classList.add('hidden');
+  $('#lightingCatalogHub').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'auto' });
+});
+
+window.addEventListener('wheel', (event) => {
+  if (!activeLightingCatalog || !$('#lighting').classList.contains('active') || lightingReader.classList.contains('hidden') || window.innerWidth <= 760 || Math.abs(event.deltaY) < 8) return;
+  event.preventDefault();
+  if (lightingWheelLocked) return;
+  lightingWheelLocked = true;
+  goToLightingPage(activeLightingPage + (event.deltaY > 0 ? 1 : -1));
+  window.setTimeout(() => { lightingWheelLocked = false; }, 650);
 }, { passive: false });
 
 const craftDetails = [
