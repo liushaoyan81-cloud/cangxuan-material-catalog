@@ -34,6 +34,15 @@ Page({
     const currentPage = low + 1;
     if (currentPage !== this.data.currentPage) this.setData({ currentPage });
   },
+  previewCurrentPage() {
+    const currentIndex = Math.max(0, this.data.currentPage - 1);
+    const current = this.data.pages[currentIndex];
+    if (!current) return;
+    wx.previewImage({
+      current: current.src,
+      urls: this.data.pages.map(item => item.src)
+    });
+  },
   onImageError(event) {
     const index = Number(event.currentTarget.dataset.index);
     if (Number.isInteger(index)) this.setData({ [`pages[${index}].failed`]: true });

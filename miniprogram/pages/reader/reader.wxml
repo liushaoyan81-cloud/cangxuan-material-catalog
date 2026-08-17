@@ -2,7 +2,7 @@
   <scroll-view class="chapter-strip" scroll-x="true" wx:if="{{chapters.length}}">
     <button wx:for="{{chapters}}" wx:key="0" class="chapter-item" data-page="{{item[1]}}" bindtap="jumpToChapter">{{item[0]}} · {{item[1]}}-{{item[2]}}页</button>
   </scroll-view>
-  <scroll-view class="reader-scroll" scroll-y="true" scroll-into-view="{{intoView}}" enhanced="true" show-scrollbar="false" bindscroll="onScroll">
+  <scroll-view class="reader-scroll" scroll-y="true" scroll-into-view="{{intoView}}" enhanced="true" show-scrollbar="false" bindscroll="onScroll" bindtap="previewCurrentPage">
     <block wx:if="{{catalog.local}}">
       <view id="reader-page-1" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-01.jpg" mode="aspectFit" lazy-load="true"/></view>
       <view id="reader-page-2" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-02.jpg" mode="aspectFit" lazy-load="true"/></view>
