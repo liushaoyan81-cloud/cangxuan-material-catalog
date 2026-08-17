@@ -58,7 +58,13 @@ function getPageImage(catalog, page) {
   const height = portrait ? catalog.width : catalog.height;
   const folderFile = String(page).padStart(catalog.pageDigits || 3, '0');
   const path = `${catalog.folder}/page-${folderFile}.webp`;
-  return { src: catalog.local ? `/${path}` : asset(path), width, height, portrait };
+  return {
+    src: catalog.local ? `/${path}` : asset(path),
+    width,
+    height,
+    displayHeight: Math.round(750 * height / width),
+    portrait
+  };
 }
 
 module.exports = { ASSET_VERSION, BASE_URL, asset, categories, categoryCatalogs, companyCatalog, getCatalog, getPageImage };

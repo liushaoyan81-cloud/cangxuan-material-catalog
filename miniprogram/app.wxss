@@ -41,7 +41,7 @@ button::after { border: 0; }
 .catalog-arrow { color: #a64f33; font-size: 24rpx; }
 .back-link { display: inline-flex; padding: 28rpx 40rpx 0; color: #a64f33; font-size: 22rpx; }
 .reader-page { position: relative; width: 100%; background: #ebe7df; }
-.reader-image { display: block; width: 100%; height: auto; }
+.reader-image { display: block; width: 100%; height: 100%; }
 .reader-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9b9e98; font-size: 22rpx; background: #ebe7df; }
 .reader-error { color: #a64f33; border: 1rpx solid #d9d9d2; }
 .reader-overlay { position: fixed; left: 28rpx; right: 28rpx; bottom: 26rpx; z-index: 2; display: flex; align-items: center; justify-content: space-between; padding: 18rpx 22rpx; background: rgba(37, 43, 40, .9); color: #f6f1e8; }

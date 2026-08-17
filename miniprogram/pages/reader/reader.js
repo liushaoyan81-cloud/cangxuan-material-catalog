@@ -7,30 +7,32 @@ Page({
     if (!catalog) return;
     const pages = Array.from({ length: catalog.pages }, (_, index) => {
       const page = index + 1;
-      return { page, ...getPageImage(catalog, page), loaded: page === 1, failed: false };
+      return { page, ...getPageImage(catalog, page), failed: false };
     });
+    const windowInfo = wx.getWindowInfo();
+    const rpxScale = windowInfo.windowWidth / 750;
+    let offset = 0;
+    this.pageOffsets = pages.map(item => {
+      const start = offset;
+      offset += item.displayHeight * rpxScale;
+      return start;
+    });
+    this.viewportHeight = windowInfo.windowHeight;
     this.setData({ catalog, pages, chapters: catalog.chapters || [] });
     wx.setNavigationBarTitle({ title: catalog.title });
   },
-  onReady() {
-    this.pageObserver = wx.createIntersectionObserver(this, { observeAll: true });
-    this.pageObserver.relativeTo('.reader-scroll').observe('.reader-page', result => {
-      if (result.intersectionRatio > 0.12) this.loadAround(result.dataset.index);
-    });
-  },
-  onUnload() { this.pageObserver?.disconnect(); },
-  loadAround(index) {
-    const center = Number(index);
-    if (!Number.isInteger(center)) return;
-    const next = {};
-    const start = Math.max(0, center - 1);
-    const end = Math.min(this.data.pages.length - 1, center + 1);
-    this.data.pages.forEach((item, i) => {
-      const loaded = i >= start && i <= end;
-      if (item.loaded !== loaded) next[`pages[${i}].loaded`] = loaded;
-    });
-    next.currentPage = center + 1;
-    if (Object.keys(next).length) this.setData(next);
+  onScroll(event) {
+    const target = event.detail.scrollTop + (this.viewportHeight || 0) / 2;
+    const offsets = this.pageOffsets || [];
+    let low = 0;
+    let high = offsets.length - 1;
+    while (low < high) {
+      const middle = Math.ceil((low + high) / 2);
+      if (offsets[middle] <= target) low = middle;
+      else high = middle - 1;
+    }
+    const currentPage = low + 1;
+    if (currentPage !== this.data.currentPage) this.setData({ currentPage });
   },
   onImageError(event) {
     const index = Number(event.currentTarget.dataset.index);
@@ -48,8 +50,7 @@ Page({
   },
   jumpToChapter(event) {
     const page = Number(event.currentTarget.dataset.page);
-    this.setData({ intoView: `reader-page-${page}` });
-    this.loadAround(page - 1);
+    this.setData({ intoView: `reader-page-${page}`, currentPage: page });
   },
   addCurrentPage() {
     const item = this.data.pages[this.data.currentPage - 1];
