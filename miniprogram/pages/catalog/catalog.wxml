@@ -1,0 +1,9 @@
+<view class="page-shell">
+  <button class="back-link" bindtap="goBack">← 返回选材中心</button>
+  <view class="catalog-head"><text class="eyebrow">MATERIAL SUPPLY CHAIN / {{categoryInfo.english}}</text><view class="section-title">{{categoryInfo.title}}</view><view class="catalog-head-copy">{{categoryInfo.intro}}。选择一本产品图册，进入在线浏览。</view></view>
+  <view class="catalog-list">
+    <button wx:for="{{catalogs}}" wx:key="title" class="catalog-card" data-key="{{item.key}}" bindtap="openReader">
+      <text class="catalog-number">0{{index + 1}}</text><view class="catalog-card-body"><text class="catalog-brand">{{item.brand}}</text><text class="catalog-title">{{item.title}}</text><text class="catalog-meta">{{item.pages}} 页 · {{item.eyebrow}}</text></view><text class="catalog-arrow">→</text>
+    </button>
+  </view>
+</view>

@@ -1,0 +1,18 @@
+{
+  "description": "\u82cd\u73a9\u6750\u6599\u9009\u578b\u4e2d\u5fc3\u5fae\u4fe1\u5c0f\u7a0b\u5e8f",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.8.8",
+  "appid": "touristappid",
+  "projectname": "cangxuan-material-mini-program",
+  "miniprogramRoot": "./"
+}

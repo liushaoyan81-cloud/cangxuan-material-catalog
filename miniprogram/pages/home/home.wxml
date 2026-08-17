@@ -1,0 +1,20 @@
+<view class="page-shell">
+  <view class="top-brand">
+    <text class="brand-mark">C·X</text>
+    <view><text class="brand-name">苍玹</text><text class="brand-subtitle">设计全案软装 · 材料选型中心</text></view>
+  </view>
+  <view class="hero">
+    <text class="eyebrow">DESIGN · MATERIAL · LIVING</text>
+    <view class="hero-title">把喜欢的材料<br/><text style="color:#a64f33">记录下来</text></view>
+    <view class="hero-copy">从公司工艺到供应链图册，按品牌和品类浏览，记录型号、款式与备注，方便后续和设计师沟通。</view>
+    <button class="hero-link" bindtap="openCompany"><text>了解苍玹公司与施工工艺</text><text>→</text></button>
+  </view>
+  <view class="intro-card"><text class="intro-card-title">先看空间，再选材料</text><view class="intro-card-copy">每一页保持原资料的排版比例，手机端按需加载，适合在现场与设计师一起浏览。</view></view>
+  <view class="supply-head"><text class="eyebrow">MATERIAL SUPPLY CHAIN</text><view class="section-title">供应链目录</view><text class="muted">选择一个品类，进入品牌与产品图册</text></view>
+  <view class="category-grid">
+    <button wx:for="{{categories}}" wx:key="key" class="category-card" data-key="{{item.key}}" bindtap="openCategory">
+      <text class="category-card-index">0{{index + 1}}</text><text class="category-card-title">{{item.title}}</text><text class="category-card-en">{{item.english}}</text><text class="category-card-intro">{{item.intro}}</text>
+    </button>
+  </view>
+  <view class="bottom-note">当前为选材记录工具，不显示报价。确定产品后，可在“我的选型单”中查看并整理给苍玹设计师。</view>
+</view>

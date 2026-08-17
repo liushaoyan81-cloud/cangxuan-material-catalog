@@ -1,0 +1,27 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/catalog/catalog",
+    "pages/reader/reader",
+    "pages/selection/selection"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#f5f3ef",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "\u82cd\u73a9\u6750\u6599\u9009\u578b\u4e2d\u5fc3",
+    "backgroundColor": "#f5f3ef",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#7b817c",
+    "selectedColor": "#a64f33",
+    "backgroundColor": "#fbfaf7",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/home/home", "text": "\u9009\u6750\u4e2d\u5fc3" },
+      { "pagePath": "pages/selection/selection", "text": "\u6211\u7684\u9009\u578b\u5355" }
+    ]
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

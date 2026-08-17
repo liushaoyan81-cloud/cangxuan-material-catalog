@@ -1,0 +1,11 @@
+<view class="reader-shell">
+  <scroll-view class="chapter-strip" scroll-x="true" wx:if="{{chapters.length}}">
+    <button wx:for="{{chapters}}" wx:key="0" class="chapter-item" data-page="{{item[1]}}" bindtap="jumpToChapter">{{item[0]}} · {{item[1]}}-{{item[2]}}页</button>
+  </scroll-view>
+  <scroll-view class="reader-scroll" scroll-y="true" scroll-into-view="{{intoView}}" enhanced="true" show-scrollbar="false">
+    <view wx:for="{{pages}}" wx:key="page" id="reader-page-{{item.page}}" class="reader-page" data-index="{{index}}" style="aspect-ratio:{{item.width}}/{{item.height}}">
+      <image wx:if="{{item.loaded}}" class="reader-image" src="{{item.src}}" mode="widthFix" lazy-load="true" show-menu-by-longpress="true"/><view wx:else class="reader-placeholder">向下浏览后加载第 {{item.page}} 页</view>
+    </view>
+  </scroll-view>
+  <view class="reader-overlay"><text class="reader-counter">{{catalog.title}} · {{currentPage}} / {{catalog.pages}}</text><button class="reader-action" bindtap="addCurrentPage">记录这一页</button><button class="reader-action" bindtap="openSelection">选型单</button></view>
+</view>
