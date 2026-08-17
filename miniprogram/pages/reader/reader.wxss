@@ -1,4 +1,5 @@
 .reader-shell { height: 100vh; overflow: hidden; }
 .reader-scroll { height: calc(100vh - 98rpx); }
 .reader-page { min-height: 360rpx; }
+.company-static-page { height: 422rpx; }
 .reader-overlay { bottom: 22rpx; }
