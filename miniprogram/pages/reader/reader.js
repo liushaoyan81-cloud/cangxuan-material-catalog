@@ -7,7 +7,7 @@ Page({
     if (!catalog) return;
     const pages = Array.from({ length: catalog.pages }, (_, index) => {
       const page = index + 1;
-      return { page, ...getPageImage(catalog, page), loaded: page <= 3 };
+      return { page, ...getPageImage(catalog, page), loaded: page === 1, failed: false };
     });
     this.setData({ catalog, pages, chapters: catalog.chapters || [] });
     wx.setNavigationBarTitle({ title: catalog.title });
@@ -23,14 +23,28 @@ Page({
     const center = Number(index);
     if (!Number.isInteger(center)) return;
     const next = {};
-    const start = Math.max(0, center - 2);
-    const end = Math.min(this.data.pages.length - 1, center + 2);
+    const start = Math.max(0, center - 1);
+    const end = Math.min(this.data.pages.length - 1, center + 1);
     this.data.pages.forEach((item, i) => {
       const loaded = i >= start && i <= end;
       if (item.loaded !== loaded) next[`pages[${i}].loaded`] = loaded;
     });
     next.currentPage = center + 1;
     if (Object.keys(next).length) this.setData(next);
+  },
+  onImageError(event) {
+    const index = Number(event.currentTarget.dataset.index);
+    if (Number.isInteger(index)) this.setData({ [`pages[${index}].failed`]: true });
+  },
+  retryImage(event) {
+    const index = Number(event.currentTarget.dataset.index);
+    const page = this.data.pages[index];
+    if (!page) return;
+    const separator = page.src.includes('?') ? '&' : '?';
+    this.setData({
+      [`pages[${index}].failed`]: false,
+      [`pages[${index}].src`]: `${page.src}${separator}retry=${Date.now()}`
+    });
   },
   jumpToChapter(event) {
     const page = Number(event.currentTarget.dataset.page);

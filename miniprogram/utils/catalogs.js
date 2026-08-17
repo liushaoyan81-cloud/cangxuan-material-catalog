@@ -7,7 +7,7 @@ function asset(path) {
 
 const companyCatalog = {
   key: 'company', title: '关于苍玹', eyebrow: 'ABOUT CANGXUAN', folder: 'company-pages', pages: 35,
-  width: 1200, height: 675,
+  width: 1200, height: 675, local: true, pageDigits: 2,
   chapters: [['企业简介', 1, 4], ['合作流程', 5, 9], ['装修辅材', 10, 24], ['实景案例', 24, 35]]
 };
 
@@ -56,8 +56,9 @@ function getPageImage(catalog, page) {
     || (catalog.landscapePages && !catalog.landscapePages.includes(page) && catalog.portraitPages === undefined);
   const width = portrait ? catalog.height : catalog.width;
   const height = portrait ? catalog.width : catalog.height;
-  const folderFile = String(page).padStart(3, '0');
-  return { src: asset(`${catalog.folder}/page-${folderFile}.webp`), width, height, portrait };
+  const folderFile = String(page).padStart(catalog.pageDigits || 3, '0');
+  const path = `${catalog.folder}/page-${folderFile}.webp`;
+  return { src: catalog.local ? `/${path}` : asset(path), width, height, portrait };
 }
 
 module.exports = { ASSET_VERSION, BASE_URL, asset, categories, categoryCatalogs, companyCatalog, getCatalog, getPageImage };
