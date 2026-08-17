@@ -13,7 +13,7 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 
 const virtualPageRadius = () => window.innerWidth <= 760 ? 2 : 4;
-const catalogAssetVersion = '20260813-image-recovery-v2';
+const catalogAssetVersion = '20260817-mobile-compression-v3';
 
 function versionedAsset(src) {
   const separator = src.includes('?') ? '&' : '?';
@@ -66,6 +66,13 @@ function updateVirtualPageWindow(container, currentPage, totalPages) {
   const end = Math.min(totalPages, currentPage + radius);
   const nextPages = new Set();
   for (let page = start; page <= end; page += 1) nextPages.add(page);
+
+  container.querySelectorAll('figure[data-page]').forEach((figure) => {
+    const rect = figure.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+      nextPages.add(Number(figure.dataset.page));
+    }
+  });
 
   const loadedPages = container._virtualLoadedPages || new Set();
   loadedPages.forEach((page) => {
