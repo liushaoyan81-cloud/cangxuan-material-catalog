@@ -4,41 +4,41 @@
   </scroll-view>
   <scroll-view class="reader-scroll" scroll-y="true" scroll-into-view="{{intoView}}" enhanced="true" show-scrollbar="false" bindscroll="onScroll">
     <block wx:if="{{catalog.local}}">
-      <view id="reader-page-1" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-01.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-2" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-02.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-3" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-03.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-4" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-04.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-5" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-05.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-6" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-06.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-7" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-07.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-8" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-08.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-9" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-09.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-10" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-10.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-11" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-11.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-12" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-12.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-13" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-13.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-14" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-14.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-15" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-15.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-16" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-16.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-17" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-17.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-18" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-18.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-19" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-19.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-20" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-20.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-21" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-21.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-22" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-22.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-23" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-23.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-24" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-24.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-25" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-25.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-26" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-26.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-27" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-27.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-28" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-28.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-29" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-29.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-30" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-30.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-31" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-31.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-32" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-32.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-33" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-33.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-34" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-34.webp" mode="aspectFit" lazy-load="true"/></view>
-      <view id="reader-page-35" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-35.webp" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-1" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-01.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-2" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-02.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-3" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-03.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-4" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-04.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-5" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-05.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-6" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-06.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-7" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-07.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-8" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-08.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-9" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-09.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-10" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-10.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-11" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-11.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-12" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-12.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-13" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-13.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-14" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-14.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-15" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-15.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-16" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-16.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-17" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-17.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-18" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-18.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-19" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-19.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-20" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-20.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-21" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-21.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-22" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-22.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-23" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-23.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-24" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-24.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-25" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-25.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-26" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-26.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-27" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-27.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-28" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-28.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-29" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-29.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-30" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-30.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-31" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-31.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-32" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-32.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-33" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-33.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-34" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-34.jpg" mode="aspectFit" lazy-load="true"/></view>
+      <view id="reader-page-35" class="reader-page company-static-page"><image class="reader-image" src="/company-pages/page-35.jpg" mode="aspectFit" lazy-load="true"/></view>
     </block>
     <block wx:else>
       <view wx:for="{{pages}}" wx:key="page" id="reader-page-{{item.page}}" class="reader-page" data-index="{{index}}" style="height:{{item.displayHeight}}rpx">

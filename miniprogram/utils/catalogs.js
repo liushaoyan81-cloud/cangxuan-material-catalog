@@ -57,7 +57,8 @@ function getPageImage(catalog, page) {
   const width = portrait ? catalog.height : catalog.width;
   const height = portrait ? catalog.width : catalog.height;
   const folderFile = String(page).padStart(catalog.pageDigits || 3, '0');
-  const path = `${catalog.folder}/page-${folderFile}.webp`;
+  const extension = catalog.local ? 'jpg' : 'webp';
+  const path = `${catalog.folder}/page-${folderFile}.${extension}`;
   return {
     src: catalog.local ? `/${path}` : asset(path),
     width,
