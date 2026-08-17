@@ -1,18 +1,45 @@
 {
-  "description": "\u82cd\u73a9\u6750\u6599\u9009\u578b\u4e2d\u5fc3\u5fae\u4fe1\u5c0f\u7a0b\u5e8f",
+  "description": "苍玩材料选型中心微信小程序",
   "packOptions": {
-    "ignore": []
+    "ignore": [],
+    "include": [
+      {
+        "value": "company-pages",
+        "type": "folder"
+      }
+    ]
   },
   "setting": {
     "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
-    "minified": true
+    "minified": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "ignoreDevUnusedFiles": false,
+    "swc": false,
+    "disableSWC": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
   },
   "compileType": "miniprogram",
   "libVersion": "3.8.8",
-  "appid": "touristappid",
+  "appid": "wx0a74b2badca17701",
   "projectname": "cangxuan-material-mini-program",
-  "miniprogramRoot": "./"
+  "miniprogramRoot": "./",
+  "simulatorPluginLibVersion": {},
+  "editorSetting": {}
 }
