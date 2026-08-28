@@ -1,5 +1,20 @@
 Page({
   data: { list: [] },
+  onLoad() {
+    wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] });
+  },
+  onShareAppMessage() {
+    return {
+      title: '苍玹材料选型单',
+      path: '/pages/selection/selection'
+    };
+  },
+  onShareTimeline() {
+    return {
+      title: '苍玹材料选型中心',
+      query: ''
+    };
+  },
   onShow() { this.setData({ list: wx.getStorageSync('cangxuan-mini-selection') || [] }); },
   remove(event) {
     const id = event.currentTarget.dataset.id;

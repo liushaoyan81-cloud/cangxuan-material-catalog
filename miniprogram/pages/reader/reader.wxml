@@ -47,5 +47,5 @@
       </view>
     </block>
   </scroll-view>
-  <view class="reader-overlay"><text class="reader-counter">{{catalog.title}} · {{currentPage}} / {{catalog.pages}}</text><button class="reader-action" bindtap="addCurrentPage">记录这一页</button><button class="reader-action" bindtap="openSelection">选型单</button></view>
+  <view class="reader-overlay"><text class="reader-counter">{{catalog.title}} · {{currentPage}} / {{catalog.pages}}</text><button class="reader-action" bindtap="addCurrentPage">记录这一页</button><button class="reader-action" open-type="share">分享</button><button class="reader-action" bindtap="openSelection">选型单</button></view>
 </view>

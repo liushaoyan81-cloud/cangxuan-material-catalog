@@ -3,6 +3,8 @@ const { companyCatalog, getCatalog, getPageImage } = require('../../utils/catalo
 Page({
   data: { catalog: null, pages: [], currentPage: 1, chapters: [], selectedCount: 0, intoView: '' },
   onLoad(options) {
+    wx.showShareMenu({ menus: ['shareAppMessage', 'shareTimeline'] });
+    this.shareKey = options.key || 'company';
     const catalog = options.key === 'company' ? companyCatalog : getCatalog(options.key);
     if (!catalog) return;
     const pages = Array.from({ length: catalog.pages }, (_, index) => {
@@ -20,6 +22,20 @@ Page({
     this.viewportHeight = windowInfo.windowHeight;
     this.setData({ catalog, pages, chapters: catalog.chapters || [] });
     wx.setNavigationBarTitle({ title: catalog.title });
+  },
+  onShareAppMessage() {
+    const catalog = this.data.catalog;
+    return {
+      title: `${catalog?.title || '图册浏览'} · 苍玹材料选型中心`,
+      path: `/pages/reader/reader?key=${this.shareKey || 'company'}`
+    };
+  },
+  onShareTimeline() {
+    const catalog = this.data.catalog;
+    return {
+      title: `${catalog?.title || '图册浏览'} · 苍玹材料选型中心`,
+      query: `key=${this.shareKey || 'company'}`
+    };
   },
   onScroll(event) {
     const target = event.detail.scrollTop + (this.viewportHeight || 0) / 2;

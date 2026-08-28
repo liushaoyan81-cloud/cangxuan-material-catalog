@@ -2,6 +2,7 @@
   <view class="top-brand">
     <text class="brand-mark">C·X</text>
     <view><text class="brand-name">苍玹</text><text class="brand-subtitle">设计全案软装 · 材料选型中心</text></view>
+    <button class="header-share" open-type="share">分享</button>
   </view>
   <view class="hero">
     <text class="eyebrow">DESIGN · MATERIAL · LIVING</text>
