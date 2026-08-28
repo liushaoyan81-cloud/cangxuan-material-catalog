@@ -7,13 +7,13 @@ Page({
   },
   onShareAppMessage() {
     return {
-      title: '苍玹设计全案软装 · 材料选型中心',
+      title: '苍玹',
       path: '/pages/home/home'
     };
   },
   onShareTimeline() {
     return {
-      title: '苍玹材料选型中心 · 公司介绍与供应链图册',
+      title: '苍玹',
       query: ''
     };
   },
